@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { ServerApiService } from '../services/server-api.service';
 
 @Component({
   selector: 'cm-register',
@@ -12,17 +13,17 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
-
+ 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private serverApi: ServerApiService
   ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', Validators.required],
+        name: ['', Validators.required],
+        email: ['', Validators.required && Validators.email],
         password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -39,6 +40,17 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
+
+    this.serverApi.userRegister(this.registerForm.value)
+      .subscribe(
+        data => {
+          this.router.navigate(['/login']);
+        },
+        error => {
+          //@@this.alertService.error(error);
+          this.loading = false;
+        }
+      )
 
     /*@@
     this.userService.register(this.registerForm.value)
