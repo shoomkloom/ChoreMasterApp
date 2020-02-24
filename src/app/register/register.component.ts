@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { ServerApiService } from '../services/server-api.service';
+import { AlertService } from '../services/alert.service';
+import { AppError } from '../app-error';
 
 @Component({
   selector: 'cm-register',
@@ -17,7 +19,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private serverApi: ServerApiService
+    private serverApi: ServerApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,9 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    // reset alerts on submit
+    this.alertService.clear();
+
     // stop here if form is invalid
     if (this.registerForm.invalid) {
         return;
@@ -44,26 +50,21 @@ export class RegisterComponent implements OnInit {
     this.serverApi.userRegister(this.registerForm.value)
       .subscribe(
         data => {
+          this.alertService.success('Registration successful', true);
+
+          localStorage.setItem('user', JSON.stringify(data));
+
           this.router.navigate(['/login']);
         },
-        error => {
-          //@@this.alertService.error(error);
+        (error: AppError) => {
+          if(error.status === 404){
+            this.alertService.error('Error 404!');
+          }
+          else{
+            this.alertService.error('There was an unexpected error, please try again.');
+          }
           this.loading = false;
         }
       )
-
-    /*@@
-    this.userService.register(this.registerForm.value)
-        .pipe(first())
-        .subscribe(
-            data => {
-                this.alertService.success('Registration successful', true);
-                this.router.navigate(['/login']);
-            },
-            error => {
-                this.alertService.error(error);
-                this.loading = false;
-            });
-    */
   }
 }

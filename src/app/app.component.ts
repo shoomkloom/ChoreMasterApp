@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from './models/user';
+import { ServerApiService } from './services/server-api.service';
 
 @Component({
   selector: 'cm-app-root',
@@ -13,7 +14,12 @@ export class AppComponent {
 
   currentUser: User;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private serverApi: ServerApiService
+    ) { 
+      this.currentUser = this.serverApi.currentUserValue;
+    }
 
   logout() {
       this.router.navigate(['/login']);

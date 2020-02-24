@@ -1,25 +1,71 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { EMPTY, throwError, BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { AppError } from '../app-error';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerApiService {
   url = "http://localhost:3000";
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
+
+  //Auth
+  authGetToken(user: User){
+    const url = this.url + '/api/auth';
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.httpClient.post(url, JSON.stringify(user), { headers, responseType: 'text'})
+      .pipe(
+        map(token => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          localStorage.setItem('token', token.toString());
+          return token;
+        }),
+        catchError( err => {
+            if (err.status == 401) {
+                return EMPTY;
+            } else {
+                /*@@*/console.log('error=', err);
+                return throwError(new AppError(err.status));
+            }
+        })
+      );
+  }
 
   //Users
   userRegister(user){
     const url = this.url + '/api/users';
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
+        'Content-Type':  'application/json'
       })
     };
 
-    return this.httpClient.post(url, JSON.stringify(user), httpOptions);
+    return this.httpClient.post(url, JSON.stringify(user), httpOptions)
+      .pipe(catchError( err => {
+            if (err.status == 401) {
+                return EMPTY;
+            } else {
+                /*@@*/console.log('error=', err);
+                return throwError(new AppError(err.status));
+            }
+        })
+      );
   }
 
   userGet(Id: string){

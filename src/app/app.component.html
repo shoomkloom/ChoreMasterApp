@@ -4,6 +4,14 @@
       <a class="nav-item nav-link" routerLink="/">Home</a>
       <a class="nav-item nav-link" (click)="logout()">Logout</a>
   </div>
+  <div *ngIf="currentUser" class="d-inline-block dropdown-menu-right" ngbDropdown #myDrop="ngbDropdown">
+    <button class="btn btn-outline-primary mr-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">{{currentUser.name}}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownManual">
+      <button ngbDropdownItem>Action - 1</button>
+      <button ngbDropdownItem>Another Action</button>
+      <button ngbDropdownItem>Something else is here</button>
+    </div>
+  </div>
 </nav>
 
 <!-- main app container -->
@@ -11,7 +19,7 @@
   <div class="container">
       <div class="row">
           <div class="col-sm-6 offset-sm-3">
-              <!--<alert></alert>-->
+              <cm-alert></cm-alert>
               <router-outlet></router-outlet>
           </div>
       </div>

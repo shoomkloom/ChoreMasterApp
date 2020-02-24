@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import { ServerApiService } from '../services/server-api.service';
 
 
 @Component({
@@ -13,9 +14,11 @@ export class HomeComponent implements OnInit {
   currentUser: User;
   users = [];
 
-  constructor() { }
+  constructor(private serverApi: ServerApiService) { }
 
   ngOnInit() {
+    //@@this.currentUser = JSON.parse(localStorage.getItem('user'));
+    this.currentUser = this.serverApi.currentUserValue;
   }
  
 }
