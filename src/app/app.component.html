@@ -32,34 +32,12 @@
   
 </nav>
 
-<!--
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/">Home</a>
-  </div>
-  <div class="navbar-nav ml-auto">
-    <div *ngIf="currentUser.name">
-        <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-          <button 
-            class="btn btn-outline-primary mr-2" 
-            id="dropdownManual" 
-            ngbDropdownAnchor (focus)="myDrop.open()">
-              {{currentUser.name}}
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownManual">
-            <button ngbDropdownItem (click)="logout()">Logout</button>
-          </div>
-        </div>
-    </div>
-    </div>
-</nav>
--->
 <!-- main app container -->
 <div class="jumbotron">
+  <cm-alert></cm-alert>
   <div class="container">
       <div class="row">
-          <div class="col-sm-6 offset-sm-3">
-              <cm-alert></cm-alert>
+          <div class="col-sm-6">
               <router-outlet></router-outlet>
           </div>
       </div>
