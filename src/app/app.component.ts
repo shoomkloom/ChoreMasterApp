@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from './models/user';
@@ -9,19 +9,26 @@ import { ServerApiService } from './services/server-api.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Chore Master';
-
   currentUser: User;
 
   constructor(
     private router: Router,
-    private serverApi: ServerApiService
-    ) { 
-      this.currentUser = this.serverApi.currentUserValue;
-    }
+    private serverApi: ServerApiService) { }
+
+  ngOnInit() {
+      this.serverApi.currentUser.subscribe(userData => {
+        this.currentUser = userData;
+      });
+  }
 
   logout() {
-      this.router.navigate(['/login']);
+      this.serverApi.logout();
+      /*@@*/console.log('cm-app-root currentUser=', this.currentUser);
+  }
+
+  login() {
+    this.router.navigate(['/login']);
   }
 }

@@ -14,33 +14,55 @@ export class ServerApiService {
   public currentUser: Observable<User>;
 
   constructor(private httpClient: HttpClient) { 
+    if(localStorage.getItem('currentUser') == null){
+      this.clearUser();
+    }
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
+/*@@  
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
+*/
+
+  public logout(){
+    this.clearUser();
+    this.currentUserSubject.next(JSON.stringify({id: -1}));
+  }
+
+  clearUser(){
+    localStorage.setItem('currentUser', JSON.stringify({id: -1}));
+    localStorage.setItem('token', '-1');
+  }
 
   //Auth
-  authGetToken(user: User){
+  authGetValidUser(user: User){
     const url = this.url + '/api/auth';
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
 
-    return this.httpClient.post(url, JSON.stringify(user), { headers, responseType: 'text'})
+    return this.httpClient.post(url, JSON.stringify(user), httpOptions)
       .pipe(
-        map(token => {
+        map((validUser: User) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          localStorage.setItem('token', token.toString());
-          return token;
+          localStorage.setItem('currentUser', JSON.stringify(validUser));
+          this.currentUserSubject.next(validUser);
+
+          /*@@*/console.log('validUser=', validUser);
+          /*@@*/console.log('localStorage currentUser=', JSON.parse(localStorage.getItem('currentUser')));
+
+          localStorage.setItem('token', validUser.token);
+          return validUser;
         }),
         catchError( err => {
             if (err.status == 401) {
                 return EMPTY;
             } else {
-                /*@@*/console.log('error=', err);
                 return throwError(new AppError(err.status));
             }
         })
@@ -61,7 +83,6 @@ export class ServerApiService {
             if (err.status == 401) {
                 return EMPTY;
             } else {
-                /*@@*/console.log('error=', err);
                 return throwError(new AppError(err.status));
             }
         })

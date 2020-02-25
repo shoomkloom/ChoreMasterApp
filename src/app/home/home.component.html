@@ -1,5 +1,14 @@
-<h1>Hi {{currentUser.name}}!</h1>
-<p>You're logged in with Angular 8!!</p>
+<div *ngIf="currentUser.name; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <h1>Hi {{currentUser.name}}!</h1>
+    <p>You're logged in with Angular 8!!</p>
+</ng-template>
+<ng-template #elseBlock>
+    <h1>Hi!</h1>
+    <p>Please login to start</p>    
+</ng-template>
+
+<!--
 <h3>All registered users:</h3>
 <ul>
     <li *ngFor="let user of users">
@@ -7,3 +16,4 @@
         - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
     </li>
 </ul>
+-->

@@ -50,10 +50,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.serverApi.authGetToken(this.loginForm.value)
+    this.serverApi.authGetValidUser(this.loginForm.value)
       .subscribe(
-        token => {
-          this.alertService.success('Registration successful', true);
+        validUser => {
+          //@@this.alertService.success('Registration successful', true);
           this.router.navigate(['/']);
         },
         (error: AppError) => {

@@ -17,8 +17,9 @@ export class HomeComponent implements OnInit {
   constructor(private serverApi: ServerApiService) { }
 
   ngOnInit() {
-    //@@this.currentUser = JSON.parse(localStorage.getItem('user'));
-    this.currentUser = this.serverApi.currentUserValue;
+    this.serverApi.currentUser.subscribe(userData => {
+      this.currentUser = userData;
+    });
   }
  
 }
