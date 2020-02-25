@@ -29,7 +29,7 @@ export class ServerApiService {
 
   public logout(){
     this.clearUser();
-    this.currentUserSubject.next(JSON.stringify({id: -1}));
+    this.currentUserSubject.next(JSON.parse(localStorage.getItem('currentUser')));
   }
 
   clearUser(){
@@ -52,9 +52,6 @@ export class ServerApiService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(validUser));
           this.currentUserSubject.next(validUser);
-
-          /*@@*/console.log('validUser=', validUser);
-          /*@@*/console.log('localStorage currentUser=', JSON.parse(localStorage.getItem('currentUser')));
 
           localStorage.setItem('token', validUser.token);
           return validUser;

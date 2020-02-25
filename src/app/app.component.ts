@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
 
   logout() {
       this.serverApi.logout();
-      /*@@*/console.log('cm-app-root currentUser=', this.currentUser);
   }
 
   login() {
