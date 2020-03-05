@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { EMPTY, throwError, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppError } from '../app-error';
@@ -21,12 +21,6 @@ export class ServerApiService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-/*@@  
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
-  }
-*/
-
   public logout(){
     this.clearUser();
     this.currentUserSubject.next(JSON.parse(localStorage.getItem('currentUser')));
@@ -37,24 +31,33 @@ export class ServerApiService {
     localStorage.setItem('token', '-1');
   }
 
-  //Auth
-  authGetValidUser(user: User){
-    const url = this.url + '/api/auth';
+  getAuthHttpOptions(){
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json',
+        'x-auth-token': localStorage.getItem('token')
       })
     };
 
-    return this.httpClient.post(url, JSON.stringify(user), httpOptions)
-      .pipe(
-        map((validUser: User) => {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(validUser));
-          this.currentUserSubject.next(validUser);
+    return httpOptions;
+  }
 
-          localStorage.setItem('token', validUser.token);
-          return validUser;
+  //Auth
+  authGetValidUser(user: User){
+    const url = this.url + '/api/auth';
+
+    //We need to observe the response so we can get the jwt token from the response header
+    return this.httpClient.post(
+      url, 
+      JSON.stringify(user), 
+      {headers: new HttpHeaders({'Content-Type': 'application/json'}), observe: "response"})
+      .pipe(
+        map((res: HttpResponse<Object>) => {
+          //Store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(res.body));
+          this.currentUserSubject.next(res.body as User);
+          localStorage.setItem('token', res.headers.get('x-auth-token'));
+          return res.body as User;
         }),
         catchError( err => {
             if (err.status == 401) {
@@ -88,220 +91,95 @@ export class ServerApiService {
 
   userGet(Id: string){
     const url = this.url + '/api/users/' + Id;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   //Groups
   groupsGet(){
     const url = this.url + '/api/groups';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   groupGet(Id: string){
     const url = this.url + '/api/groups/' + Id;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   groupCreate(group){
     const url = this.url + '/api/groups';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.post(url, JSON.stringify(group), httpOptions);
+    return this.httpClient.post(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
   groupUpdate(group){
     const url = this.url + '/api/groups';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.put(url, JSON.stringify(group), httpOptions);
+    return this.httpClient.put(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
   groupAddUser(Id: string, userId: string){
     const url = this.url + '/api/groups/' + Id + '/addUser/' + userId;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.put(url, httpOptions);
+    return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
   groupRemoveUser(Id: string, userId: string){
     const url = this.url + '/api/groups/' + Id + '/removeUser/' + userId;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.put(url, httpOptions);
+    return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
   groupDelete(Id: string){
     const url = this.url + '/api/groups';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.delete(url, httpOptions);
+    return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 
   //Chore Templates
   choreTemplatesGet(){
     const url = this.url + '/api/chore-templates';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   choreTemplateGet(Id: string){
     const url = this.url + '/api/chore-templates' + Id;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   choreTemplateCreate(choreTemplate){
     const url = this.url + '/api/chore-templates';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.post(url, JSON.stringify(choreTemplate), httpOptions);
+    choreTemplate.creatorId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+    return this.httpClient.post(url, JSON.stringify(choreTemplate), this.getAuthHttpOptions());
   }
 
   choreTemplateUpdate(choreTemplate){
     const url = this.url + '/api/chore-templates';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.put(url, JSON.stringify(choreTemplate), httpOptions);
+    return this.httpClient.put(url, JSON.stringify(choreTemplate), this.getAuthHttpOptions());
   }
 
   choreTemplateDelete(Id: string){
     const url = this.url + '/api/chore-templates';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.delete(url, httpOptions);
+    return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 
   //Chores
   choresGet(){
     const url = this.url + '/api/chores';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   choreGet(Id: string){
     const url = this.url + '/api/chores' + Id;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.get(url, httpOptions);
+    return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
   choreCreate(chore){
     const url = this.url + '/api/chores';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.post(url, JSON.stringify(chore), httpOptions);
+    return this.httpClient.post(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
   choreUpdate(chore){
     const url = this.url + '/api/chore';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.put(url, JSON.stringify(chore), httpOptions);
+    return this.httpClient.put(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
   choreDelete(Id: string){
     const url = this.url + '/api/chore';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-
-    return this.httpClient.delete(url, httpOptions);
+    return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 }

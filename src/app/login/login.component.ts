@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
     this.serverApi.authGetValidUser(this.loginForm.value)
       .subscribe(
         validUser => {
-          //@@this.alertService.success('Registration successful', true);
           this.router.navigate(['/']);
         },
         (error: AppError) => {

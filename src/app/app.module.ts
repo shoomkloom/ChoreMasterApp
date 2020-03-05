@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { ServerApiService } from './services/server-api.service';
 import { AlertService } from './services/alert.service';
 import { AlertComponent } from './alert/alert.component';
+import { ChoreTemplateComponent } from './chore-template/chore-template.component';
+import { ChoreTemplatesComponent } from './chore-templates/chore-templates.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { AlertComponent } from './alert/alert.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    AlertComponent
+    AlertComponent,
+    ChoreTemplateComponent,
+    ChoreTemplatesComponent
   ],
   imports: [
     BrowserModule,
