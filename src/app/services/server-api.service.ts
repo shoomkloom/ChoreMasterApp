@@ -89,7 +89,7 @@ export class ServerApiService {
       );
   }
 
-  userGet(Id: string){
+  userGet(Id: String){
     const url = this.url + '/api/users/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -100,7 +100,7 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  groupGet(Id: string){
+  groupGet(Id: String){
     const url = this.url + '/api/groups/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -115,17 +115,17 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
-  groupAddUser(Id: string, userId: string){
+  groupAddUser(Id: String, userId: String){
     const url = this.url + '/api/groups/' + Id + '/addUser/' + userId;
     return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
-  groupRemoveUser(Id: string, userId: string){
+  groupRemoveUser(Id: String, userId: String){
     const url = this.url + '/api/groups/' + Id + '/removeUser/' + userId;
     return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
-  groupDelete(Id: string){
+  groupDelete(Id: String){
     const url = this.url + '/api/groups';
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
@@ -136,7 +136,7 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  choreTemplateGet(Id: string){
+  choreTemplateGet(Id: String){
     const url = this.url + '/api/chore-templates' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -152,7 +152,7 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(choreTemplate), this.getAuthHttpOptions());
   }
 
-  choreTemplateDelete(Id: string){
+  choreTemplateDelete(Id: String){
     const url = this.url + '/api/chore-templates';
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
@@ -163,7 +163,7 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  choreGet(Id: string){
+  choreGet(Id: String){
     const url = this.url + '/api/chores' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -178,7 +178,7 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
-  choreDelete(Id: string){
+  choreDelete(Id: String){
     const url = this.url + '/api/chore';
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }

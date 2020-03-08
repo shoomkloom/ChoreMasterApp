@@ -1,1 +1,9 @@
-<p>chore-template works!</p>
+<div>
+    <div data-toggle="collapse" attr.data-target="#content-{{index}}" style="cursor:pointer">
+        <h4 class="list-group-item-heading">{{choreTemplate.name}}</h4>
+    </div>
+    <div id="content-{{index}}" class="collapse">
+        <span class="list-group-item-text"><span *ngIf="masterUser">Created by: {{masterUser.name}}</span></span>
+        <span class="list-group-item-text"> on: {{choreTemplate.createdDate}}</span>
+    </div>
+</div>

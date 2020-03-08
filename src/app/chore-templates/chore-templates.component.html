@@ -32,12 +32,25 @@
     </div>
 </ng-template>
 <ng-template #elseBlock>
+    <div class="container" [hidden]="creatingNew == true" style="margin:10px;">
+        <h5>Available Chore Templates:</h5>
+        <div class="list-group">
+          <div class="list-group-item" 
+            *ngFor="let choreTemplate of choreTemplates; let i= index">
+            <cm-chore-template [choreTemplate]="choreTemplate" [index]="i"></cm-chore-template>
+        </div>
+        </div>
+      </div>
+
+<!--
+
     <div [hidden]="creatingNew == true" style="margin:10px;">
         <h5>Available Chore Templates:</h5>
         <ul>
             <li *ngFor="let choreTemplate of choreTemplates">
-                <cm-chore-template></cm-chore-template>
+                <cm-chore-template [choreTemplate]="choreTemplate"></cm-chore-template>
             </li>
         </ul>
     </div>
+-->    
 </ng-template>
