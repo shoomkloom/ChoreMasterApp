@@ -17,7 +17,7 @@
 
 <!-- Chore Template list -->
 <div [hidden]="creatingNew == true || assignChore == true">
-    <button class="btn btn-primary" 
+    <button class="btn btn-outline-primary" 
         (click)="onNewChoreTemplate()">
         Create New Chore Type
     </button>
@@ -30,7 +30,7 @@
         </div>
     </ng-template>
     <ng-template #elseBlock>
-        <div class="row">
+        <div class="row" style="margin-top: 10px;">
             <div class="col-8 text-left">
                 <h5>Available Chore Types:</h5>
             </div>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="list-group" style="margin-top: 5px;">
+        <div class="list-group" style="margin-top: 10px;">
             <div class="list-group-item"
                 *ngFor="let choreTemplate of choreTemplates | choreTemplateCreator: filterCreatorId; let i= index;">
                 <cm-chore-template
