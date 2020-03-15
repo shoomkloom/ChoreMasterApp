@@ -20,17 +20,17 @@
     <div [hidden]="creatingNew == true || assignChore == true">
         <button class="btn btn-primary" 
             (click)="onNewChoreTemplate()">
-            Create New Chore Template
+            Create New Chore Type
         </button>
         <div *ngIf="choreTemplates.length == 0; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <div style="margin:10px;">
-                <h5>There are no Chore Templates yet, why not create a new one?</h5>
+                <h5>There are no Chore Types yet, why not create a new one?</h5>
             </div>
         </ng-template>
         <ng-template #elseBlock>
             <div class="container" style="margin:10px;">
-                <h5>Available Chore Templates:</h5>
+                <h5>Available Chore Types:</h5>
                 <div class="list-group">
                     <div class="list-group-item" 
                         *ngFor="let choreTemplate of choreTemplates; let i= index; ">
