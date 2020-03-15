@@ -5,6 +5,7 @@ import { ServerApiService } from '../services/server-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppError } from '../app-error';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'cm-chore-templates',
@@ -16,6 +17,7 @@ export class ChoreTemplatesComponent implements OnInit {
   creatingNew = false;
   assignChore = false;
   assignedChoreTemplate: ChoreTemplate = null;
+  filterCreatorId: String;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,6 +83,14 @@ export class ChoreTemplatesComponent implements OnInit {
   
   onChoreTemplateAssignCanceled(){
     this.assignChore = false;
+  }
+
+  onFilterMine(){
+    this.filterCreatorId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+  }
+
+  onFilterAll(){
+    this.filterCreatorId = null;
   }
 }
 

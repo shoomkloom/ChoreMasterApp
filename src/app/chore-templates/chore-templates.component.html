@@ -30,10 +30,28 @@
         </ng-template>
         <ng-template #elseBlock>
             <div class="container" style="margin:10px;">
-                <h5>Available Chore Types:</h5>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <h5>Available Chore Types:</h5>
+                        </td>
+                        <td align="right" valign="center">
+                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary" (click)="onFilterMine()">
+                                  <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                                    Mine
+                                </label>
+                                <label class="btn btn-outline-secondary active" (click)="onFilterAll()">
+                                  <input type="radio" name="options" id="option2" autocomplete="off">
+                                    All
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
                 <div class="list-group">
                     <div class="list-group-item" 
-                        *ngFor="let choreTemplate of choreTemplates; let i= index; ">
+                        *ngFor="let choreTemplate of choreTemplates | choreTemplateCreator: filterCreatorId; let i= index;">
                         <cm-chore-template 
                             [choreTemplate]="choreTemplate" 
                             [index]="i"

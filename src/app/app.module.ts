@@ -16,6 +16,7 @@ import { ChoreTemplateComponent } from './chore-template/chore-template.componen
 import { ChoreTemplatesComponent } from './chore-templates/chore-templates.component';
 import { ChoreTemplateCreateComponent } from './chore-template-create/chore-template-create.component';
 import { ChoreTemplateAssignComponent } from './chore-template-assign/chore-template-assign.component';
+import { ChoreTemplateCreatorPipe } from './pipes/chore-template-creator.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ChoreTemplateAssignComponent } from './chore-template-assign/chore-temp
     ChoreTemplateComponent,
     ChoreTemplatesComponent,
     ChoreTemplateCreateComponent,
-    ChoreTemplateAssignComponent
+    ChoreTemplateAssignComponent,
+    ChoreTemplateCreatorPipe
   ],
   imports: [
     BrowserModule,
