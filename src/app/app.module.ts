@@ -14,6 +14,8 @@ import { AlertService } from './services/alert.service';
 import { AlertComponent } from './alert/alert.component';
 import { ChoreTemplateComponent } from './chore-template/chore-template.component';
 import { ChoreTemplatesComponent } from './chore-templates/chore-templates.component';
+import { ChoreTemplateCreateComponent } from './chore-template-create/chore-template-create.component';
+import { ChoreTemplateAssignComponent } from './chore-template-assign/chore-template-assign.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ChoreTemplatesComponent } from './chore-templates/chore-templates.compo
     HomeComponent,
     AlertComponent,
     ChoreTemplateComponent,
-    ChoreTemplatesComponent
+    ChoreTemplatesComponent,
+    ChoreTemplateCreateComponent,
+    ChoreTemplateAssignComponent
   ],
   imports: [
     BrowserModule,

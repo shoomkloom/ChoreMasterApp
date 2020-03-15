@@ -1,56 +1,47 @@
-<button [hidden]="creatingNew == true" class="btn btn-primary" (click)="onNewChoreTemplate()">Create New Chore Template</button>
-<div [hidden]="creatingNew == false">
-    <form [formGroup]="createNewChoreTemplateForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors.required">Name is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="details">Details</label>
-            <input type="text" formControlName="details" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.details.errors }" />
-            <div *ngIf="submitted && f.details.errors" class="invalid-feedback">
-                <div *ngIf="f.details.errors.required">Details are required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Create
-            </button>
-            <a href="#" class="btn btn-link" (click)="creatingNew = false">Cancel</a>
-        </div>
-    </form>
+<!-- Form: Create New Chore Template -->
+<div *ngIf="creatingNew == true">
+    <cm-chore-template-create 
+        (created)="onChoreTemplateCreated($event)" 
+        (canceled)="onChoreTemplateCreateCanceled()">
+    </cm-chore-template-create>
 </div>
 
-<div *ngIf="choreTemplates.length == 0; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-    <div [hidden]="creatingNew == true" style="margin:10px;">
-        <h5>There are no Chore Templates yet, why not create a new one?</h5>
-    </div>
-</ng-template>
-<ng-template #elseBlock>
-    <div class="container" [hidden]="creatingNew == true" style="margin:10px;">
-        <h5>Available Chore Templates:</h5>
-        <div class="list-group">
-          <div class="list-group-item" 
-            *ngFor="let choreTemplate of choreTemplates; let i= index">
-            <cm-chore-template [choreTemplate]="choreTemplate" [index]="i"></cm-chore-template>
-        </div>
-        </div>
-      </div>
+<!-- Form: Assign Chore -->
+<div *ngIf="assignChore == true">
+    <cm-chore-template-assign 
+        [choreTemplate]="assignedChoreTemplate"
+        (assigned)="onChoreTemplateAssigned()" 
+        (canceled)="onChoreTemplateAssignCanceled()">
+    </cm-chore-template-assign>
+</div>
 
-<!--
-
-    <div [hidden]="creatingNew == true" style="margin:10px;">
-        <h5>Available Chore Templates:</h5>
-        <ul>
-            <li *ngFor="let choreTemplate of choreTemplates">
-                <cm-chore-template [choreTemplate]="choreTemplate"></cm-chore-template>
-            </li>
-        </ul>
+<!-- Chore Template list -->
+<div class="container">
+    <div [hidden]="creatingNew == true || assignChore == true">
+        <button class="btn btn-primary" 
+            (click)="onNewChoreTemplate()">
+            Create New Chore Template
+        </button>
+        <div *ngIf="choreTemplates.length == 0; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <div style="margin:10px;">
+                <h5>There are no Chore Templates yet, why not create a new one?</h5>
+            </div>
+        </ng-template>
+        <ng-template #elseBlock>
+            <div class="container" style="margin:10px;">
+                <h5>Available Chore Templates:</h5>
+                <div class="list-group">
+                    <div class="list-group-item" 
+                        *ngFor="let choreTemplate of choreTemplates; let i= index; ">
+                        <cm-chore-template 
+                            [choreTemplate]="choreTemplate" 
+                            [index]="i"
+                            (assigned)="onChoreAssignClicked($event)">
+                        </cm-chore-template>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
     </div>
--->    
-</ng-template>
+</div>

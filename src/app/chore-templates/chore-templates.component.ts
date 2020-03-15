@@ -14,9 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ChoreTemplatesComponent implements OnInit {
   choreTemplates: ChoreTemplate[] = [];
   creatingNew = false;
-  createNewChoreTemplateForm: FormGroup;
-  loading = false;
-  submitted = false;
+  assignChore = false;
+  assignedChoreTemplate: ChoreTemplate = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,20 +26,17 @@ export class ChoreTemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.createNewChoreTemplateForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      details: ['', Validators.required]
-    });
-
     this.getChoreTemplates();
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.createNewChoreTemplateForm.controls; }
-
   onNewChoreTemplate(){
     this.creatingNew = true;
-    this.submitted = false;
+  }
+
+  sortChoreTemplates(){
+    this.choreTemplates.sort(function(a, b) {
+      return a.name>b.name?1:a.name<b.name?-1:0;
+    })
   }
 
   getChoreTemplates(){
@@ -48,7 +44,8 @@ export class ChoreTemplatesComponent implements OnInit {
       .subscribe(
         (resChoreTemplates: ChoreTemplate[]) => {
           resChoreTemplates.forEach(value => {
-            this.choreTemplates.push(value);  
+            this.choreTemplates.push(value);
+            this.sortChoreTemplates();  
           });
         },
         (error: AppError) => {
@@ -63,20 +60,50 @@ export class ChoreTemplatesComponent implements OnInit {
       )
   }
 
-  onSubmit() {
+  onChoreTemplateCreated(choreTemplateCreated: ChoreTemplate){
+    this.choreTemplates.push(choreTemplateCreated);  
+    this.sortChoreTemplates(); 
+    this.creatingNew = false;
+  }
+
+  onChoreTemplateCreateCanceled(){
+    this.creatingNew = false;
+  }
+
+  onChoreAssignClicked(assignedChoreTemplate: ChoreTemplate){
+    this.assignedChoreTemplate = assignedChoreTemplate;
+    this.assignChore = true;
+  }
+
+  onChoreTemplateAssigned(){
+    this.assignChore = false;
+  } 
+  
+  onChoreTemplateAssignCanceled(){
+    this.assignChore = false;
+  }
+}
+
+/*@@
+  onChoreAssigned(){
+    this.assignChore = true;
+  }
+
+  onAssignSubmit() {
     this.submitted = true;
-    this.creatingNew = true;
 
     // reset alerts on submit
     this.alertService.clear();
 
     // stop here if form is invalid
+/*@@
     if (this.createNewChoreTemplateForm.invalid) {
         return;
     }
+@@/
 
     this.loading = true;
-
+/*@@
     this.serverApi.choreTemplateCreate(this.createNewChoreTemplateForm.value)
       .subscribe(
         (validChoreTemplate: ChoreTemplate) => {
@@ -99,5 +126,7 @@ export class ChoreTemplatesComponent implements OnInit {
           this.loading = false;
         }
       )
+@@/
   }
 }
+@@*/

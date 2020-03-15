@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChoreTemplate } from '../models/choreTemplate';
 import { User } from '../models/user';
 import { ServerApiService } from '../services/server-api.service';
@@ -13,6 +13,7 @@ import { AlertService } from '../services/alert.service';
 export class ChoreTemplateComponent implements OnInit {
   @Input() choreTemplate: ChoreTemplate;
   @Input() index: Number;
+  @Output() assigned = new EventEmitter<ChoreTemplate>();
   masterUser: User;
 
   constructor(
@@ -40,5 +41,10 @@ export class ChoreTemplateComponent implements OnInit {
           }
         }
       )
+  }
+
+  onAssign(){
+    //Assign a chore from this template
+    this.assigned.emit(this.choreTemplate);
   }
 }

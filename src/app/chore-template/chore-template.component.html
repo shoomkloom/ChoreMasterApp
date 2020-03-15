@@ -1,9 +1,23 @@
 <div>
-    <div data-toggle="collapse" attr.data-target="#content-{{index}}" style="cursor:pointer">
-        <h4 class="list-group-item-heading">{{choreTemplate.name}}</h4>
-    </div>
-    <div id="content-{{index}}" class="collapse">
-        <span class="list-group-item-text"><span *ngIf="masterUser">Created by: {{masterUser.name}}</span></span>
-        <span class="list-group-item-text"> on: {{choreTemplate.createdDate}}</span>
-    </div>
+    <table width="100%">
+        <tr>
+            <td>
+                <div data-toggle="collapse" attr.data-target="#content-{{index}}" style="cursor:pointer">
+                    <h6 class="list-group-item-heading">{{choreTemplate.name}}</h6>
+                </div>
+                <div id="content-{{index}}" class="collapse">
+                    <div>
+                        <span class="list-group-item-text"><span *ngIf="masterUser">Created by: {{masterUser.name}}</span></span>
+                        <span class="list-group-item-text"> on: {{choreTemplate.createdDate | date:'longDate'}}</span>
+                    </div>
+                    <div *ngIf="choreTemplate.updatedDate" class="list-group-item-text"> Last updated on: {{choreTemplate.updatedDate | date:'longDate'}}</div>
+                </div>
+            </td>
+            <td align="right">
+                <button type="button" class="btn btn-light" (click)="onAssign()">
+                    Assign
+                </button>
+            </td>
+        </tr>
+    </table>
 </div>
