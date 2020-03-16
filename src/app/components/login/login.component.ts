@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { AlertService } from '../services/alert.service';
-import { ServerApiService } from '../services/server-api.service';
-import { AppError } from '../app-error';
+import { AlertService } from '../../services/alert.service';
+import { ServerApiService } from '../../services/server-api.service';
+import { AppError } from '../../app-error';
 
 @Component({
   selector: 'cm-login',

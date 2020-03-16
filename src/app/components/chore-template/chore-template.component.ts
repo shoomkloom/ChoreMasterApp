@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ChoreTemplate } from '../models/choreTemplate';
-import { User } from '../models/user';
-import { ServerApiService } from '../services/server-api.service';
-import { AppError } from '../app-error';
-import { AlertService } from '../services/alert.service';
+import { ChoreTemplate } from '../../models/choreTemplate';
+import { User } from '../../models/user';
+import { ServerApiService } from '../../services/server-api.service';
+import { AppError } from '../../app-error';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'cm-chore-template',

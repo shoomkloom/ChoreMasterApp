@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { User } from '../models/user';
-import { ServerApiService } from '../services/server-api.service';
+import { User } from '../../models/user';
+import { ServerApiService } from '../../services/server-api.service';
 
 
 @Component({

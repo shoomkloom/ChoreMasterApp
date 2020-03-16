@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ChoreTemplate } from '../models/choreTemplate';
-import { AlertService } from '../services/alert.service';
-import { ServerApiService } from '../services/server-api.service';
+import { ChoreTemplate } from '../../models/choreTemplate';
+import { AlertService } from '../../services/alert.service';
+import { ServerApiService } from '../../services/server-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AppError } from '../app-error';
+import { AppError } from '../../app-error';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'cm-chore-templates',

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ChoreTemplate } from '../models/choreTemplate';
-import { ServerApiService } from '../services/server-api.service';
-import { AlertService } from '../services/alert.service';
-import { AppError } from '../app-error';
+import { ChoreTemplate } from '../../models/choreTemplate';
+import { ServerApiService } from '../../services/server-api.service';
+import { AlertService } from '../../services/alert.service';
+import { AppError } from '../../app-error';
 
 @Component({
   selector: 'cm-chore-template-assign',

@@ -5,18 +5,20 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
 import { ServerApiService } from './services/server-api.service';
 import { AlertService } from './services/alert.service';
-import { AlertComponent } from './alert/alert.component';
-import { ChoreTemplateComponent } from './chore-template/chore-template.component';
-import { ChoreTemplatesComponent } from './chore-templates/chore-templates.component';
-import { ChoreTemplateCreateComponent } from './chore-template-create/chore-template-create.component';
-import { ChoreTemplateAssignComponent } from './chore-template-assign/chore-template-assign.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { ChoreTemplateComponent } from './components/chore-template/chore-template.component';
+import { ChoreTemplatesComponent } from './components/chore-templates/chore-templates.component';
+import { ChoreTemplateCreateComponent } from './components/chore-template-create/chore-template-create.component';
+import { ChoreTemplateAssignComponent } from './components/chore-template-assign/chore-template-assign.component';
 import { ChoreTemplateCreatorPipe } from './pipes/chore-template-creator.pipe';
+import { GroupComponent } from './components/group/group.component';
+import { GroupsComponent } from './components/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ChoreTemplateCreatorPipe } from './pipes/chore-template-creator.pipe';
     ChoreTemplatesComponent,
     ChoreTemplateCreateComponent,
     ChoreTemplateAssignComponent,
-    ChoreTemplateCreatorPipe
+    ChoreTemplateCreatorPipe,
+    GroupComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,

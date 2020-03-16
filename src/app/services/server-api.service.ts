@@ -115,6 +115,11 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
+  groupGetUsers(Id: String){
+    const url = this.url + '/api/groups/' + Id + '/users';
+    return this.httpClient.get(url, this.getAuthHttpOptions());
+  }
+
   groupAddUser(Id: String, userId: String){
     const url = this.url + '/api/groups/' + Id + '/addUser/' + userId;
     return this.httpClient.put(url, this.getAuthHttpOptions());
