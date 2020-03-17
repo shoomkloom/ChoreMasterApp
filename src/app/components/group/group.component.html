@@ -1,14 +1,23 @@
-<div class="row">
-    <div class="col-10 pull-left">
-        <div>
-            <h6 class="list-group-item-heading">{{group.name}}</h6>
-        </div>
-        <div class="list-group" style="margin-top: 10px;">
-            <div class="list-group-item"
-                *ngFor="let groupUser of groupUsers">
-                <div>
-                    <span class="list-group-item-text">{{groupUser.name}}</span>
+<div class="card-header"><b>{{group.name}}</b></div>
+<div class="card-body">
+    <div class="list-group list-group-flush">
+        <div class="list-group-item"
+            *ngFor="let groupUser of groupUsers">
+            <div class="row no-gutters">
+                <div class="card-text col-10 pull-left">
+                    {{groupUser.name}}
+                </div>
+                <div class="col-2 pull-right">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm" 
+                        [style.border-color]="color" 
+                        (click)="onAssign(groupUser)">
+                        Assign
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 </div>
+

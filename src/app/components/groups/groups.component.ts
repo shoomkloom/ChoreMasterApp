@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServerApiService } from 'src/app/services/server-api.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AppError } from 'src/app/app-error';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'cm-groups',
@@ -15,6 +16,8 @@ export class GroupsComponent implements OnInit {
   groups: Group[] = [];
   creatingNew = false;
   assignChore = false;
+  colors = ['#27AE60', '#F39C12', '#7D3C98', '#1A5276', '#D35400'];
+  assignChoreUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,4 +72,17 @@ export class GroupsComponent implements OnInit {
     this.creatingNew = false;
   }
 
+  getColor(i: number){
+    let colorIndex = i;
+    while(colorIndex > this.colors.length-1){
+      colorIndex-=this.colors.length;
+    }
+
+    return this.colors[colorIndex];
+  }
+
+  onChoreAssignClicked(groupUser: User){
+    //Assign a chore to this user
+    this.assignChoreUser = groupUser;
+  }
 }

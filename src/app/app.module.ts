@@ -19,6 +19,7 @@ import { ChoreTemplateAssignComponent } from './components/chore-template-assign
 import { ChoreTemplateCreatorPipe } from './pipes/chore-template-creator.pipe';
 import { GroupComponent } from './components/group/group.component';
 import { GroupsComponent } from './components/groups/groups.component';
+import { GroupCreateComponent } from './components/group-create/group-create.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { GroupsComponent } from './components/groups/groups.component';
     ChoreTemplateAssignComponent,
     ChoreTemplateCreatorPipe,
     GroupComponent,
-    GroupsComponent
+    GroupsComponent,
+    GroupCreateComponent
   ],
   imports: [
     BrowserModule,

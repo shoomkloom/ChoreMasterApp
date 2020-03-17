@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Group } from 'src/app/models/group';
 import { ServerApiService } from 'src/app/services/server-api.service';
@@ -12,6 +12,8 @@ import { AppError } from 'src/app/app-error';
 })
 export class GroupComponent implements OnInit {
   @Input() group: Group;
+  @Input() color: String;
+  @Output() assigned = new EventEmitter<User>();
   groupUsers: User[] = [];
   
   constructor(
@@ -41,5 +43,10 @@ export class GroupComponent implements OnInit {
           }
         }
       )
+  }
+
+  onAssign(groupUser: User){
+    //Assign a chore to this user
+    this.assigned.emit(groupUser);
   }
 }

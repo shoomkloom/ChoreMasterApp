@@ -1,11 +1,11 @@
 <!-- Form: Create New Chore Template -->
 <div class="container">
-    <h5>Assign this Chore:</h5>
-    <form (ngSubmit)="onSubmit()" #assignChoreTemplateForm="ngForm">
+    <h5>Create New Chore Template:</h5>
+    <form (ngSubmit)="onSubmit()" #createNewChoreTemplateForm="ngForm">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name"
-                readonly
+                required
                 [(ngModel)]="choreTemplate.name" name="name"
                 #name="ngModel">
             <div [hidden]="name.valid || name.pristine"
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label for="details">Details</label>
             <input type="text" class="form-control" id="details"
-                readonly
+                required
                 [(ngModel)]="choreTemplate.details" name="details"
                 #details="ngModel">
             <div [hidden]="details.valid || details.pristine" class="alert alert-danger">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary" 
-            [disabled]="!assignChoreTemplateForm.form.valid">Assign
+            [disabled]="!createNewChoreTemplateForm.form.valid">Submit
         </button>
         <a href="#" class="btn btn-link" (click)="onCancel()">Cancel</a>
     </form>
