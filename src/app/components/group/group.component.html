@@ -1,16 +1,23 @@
-<div class="card-header"><b>{{group.name}}</b></div>
+<div class="card-header">
+    <div>
+        <b>{{group.name}}</b>
+        &nbsp;<button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-pencil-alt"></i></button>
+        &nbsp;<button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
 <div class="card-body">
     <div class="list-group list-group-flush">
         <div class="list-group-item"
             *ngFor="let groupUser of groupUsers">
             <div class="row no-gutters">
-                <div class="card-text col-10 pull-left">
-                    {{groupUser.name}}
+                <div class="col-10 card-text text-left">
+                    <button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-minus"></i></button>
+                    &nbsp;{{groupUser.name}}
                 </div>
-                <div class="col-2 pull-right">
+                <div class="col-2 text-right">
                     <button 
                         type="button" 
-                        class="btn btn-sm" 
+                        class="btn btn-sm btn-outline-secondary" 
                         [style.border-color]="color" 
                         (click)="onAssign(groupUser)">
                         Assign
@@ -19,5 +26,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="card-footer">
+    <small class="text-muted">Last updated: {{group.updatedDate | date:'longDate'}}</small>
 </div>
 

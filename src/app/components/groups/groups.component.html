@@ -1,11 +1,10 @@
-<!-- Form: Create New Group ->
+<!-- Form: Create New Group -->
 <div *ngIf="creatingNew == true">
     <cm-group-create 
         (created)="onGroupCreated($event)" 
         (canceled)="onGroupCreateCanceled()">
     </cm-group-create>
 </div>
--->
 
 <!-- Group list -->
 <div [hidden]="creatingNew == true || assignChore == true">
