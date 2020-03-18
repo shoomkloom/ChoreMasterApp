@@ -32,6 +32,7 @@ export class ServerApiService {
   }
 
   getAuthHttpOptions(){
+    //*@@*/console.log('token:', localStorage.getItem('token'));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -89,6 +90,11 @@ export class ServerApiService {
       );
   }
 
+  usersGet(){
+    const url = this.url + '/api/users';
+    return this.httpClient.get(url, this.getAuthHttpOptions());
+  }
+
   userGet(Id: String){
     const url = this.url + '/api/users/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
@@ -97,6 +103,11 @@ export class ServerApiService {
   //Groups
   groupsGet(){
     const url = this.url + '/api/groups';
+    return this.httpClient.get(url, this.getAuthHttpOptions());
+  }
+
+  groupsGetMe(masterId){
+    const url = this.url + '/api/groups/me/' + masterId;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 

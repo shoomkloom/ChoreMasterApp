@@ -14,7 +14,7 @@
     </button>
     <div *ngIf="groups.length == 0; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-        <div class="row no-gutters">
+        <div class="row no-gutters" style="margin-top: 10px;">
             <div class="col-12 text-left">
                 <h5>You have not created any Groups yet, why not create a new one?</h5>
             </div>        
@@ -26,12 +26,13 @@
                 <h5>My Groups:</h5>
             </div>
         </div>
-        <div class="card-deck">
-            <div class="card" *ngFor="let group of groups; let i=index;" [style.border-color]="getColor(i)">
+        <div class="row">
+            <div class="col-sm-6" *ngFor="let group of groups; let i=index;">
                 <cm-group 
                     [group]="group" 
                     [color]="getColor(i)" 
-                    (assigned)="onChoreAssignClicked($event)"></cm-group>
+                    (assigned)="onChoreAssignClicked($event)">
+                </cm-group>
             </div>
         </div>
     </ng-template>

@@ -1,7 +1,7 @@
 <!-- Form: Create New Chore Template -->
 <div class="container">
-    <h5>Create New Chore Template:</h5>
-    <form (ngSubmit)="onSubmit()" #createNewChoreTemplateForm="ngForm">
+    <h5>Create New Group:</h5>
+    <form (ngSubmit)="onSubmit()" #createNewGroupForm="ngForm">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name"
@@ -14,7 +14,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary" 
-            [disabled]="!createNewChoreTemplateForm.form.valid">Submit
+            [disabled]="!createNewGroupForm.form.valid">Submit
         </button>
         <a href="#" class="btn btn-link" (click)="onCancel()">Cancel</a>
     </form>

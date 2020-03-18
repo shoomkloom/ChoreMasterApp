@@ -42,7 +42,7 @@ export class GroupsComponent implements OnInit {
   }
 
   getGroups(){
-    this.serverApi.groupsGet()
+    this.serverApi.groupsGetMe((JSON.parse(localStorage.getItem('currentUser')) as User)._id)
       .subscribe(
         (resGroups: Group[]) => {
           resGroups.forEach(value => {

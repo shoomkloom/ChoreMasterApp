@@ -11,6 +11,7 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./group-create.component.css']
 })
 export class GroupCreateComponent implements OnInit {
+  users: User[] = [];
   group = new Group();
   submitted = false;
   loading = false;
@@ -24,6 +25,34 @@ export class GroupCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getUsers();
+  }
+
+  sortUsers(){
+    this.users.sort(function(a, b) {
+      return a.name>b.name?1:a.name<b.name?-1:0;
+    })
+  }
+
+  getUsers(){
+    this.serverApi.usersGet()
+      .subscribe(
+        (resUser: User[]) => {
+          resUser.forEach(value => {
+            this.users.push(value);
+            this.sortUsers();  
+          });
+        },
+        (error: AppError) => {
+          console.log('ERROR:', error);
+          if(error.status === 401){
+            this.alertService.error('Unauthorised, please login again!');
+          }
+          else{
+            this.alertService.error('There was an unexpected error, please try again.');
+          }
+        }
+      )
   }
 
   onSubmit() {

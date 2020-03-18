@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'choreTemplateCreator'
+  name: 'choreTemplateCreator',
+  pure: false
 })
 export class ChoreTemplateCreatorPipe implements PipeTransform {
 
