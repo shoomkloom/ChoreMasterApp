@@ -13,6 +13,20 @@
                 Name is required
             </div>
         </div>
+        <div class="form-group">
+            <label for="members">Select Members:</label>
+            <ng-select #MemberNgSelect
+                [items]="users"
+                required
+                bindLabel="name"
+                bindValue="_id"
+                placeholder="Select members"
+                multiple="true"
+                [searchable]="true" 
+                [clearable]="true"
+                [(ngModel)]="selected" name="memberSelect">
+            </ng-select>
+        </div>
         <button type="submit" class="btn btn-primary" 
             [disabled]="!createNewGroupForm.form.valid">Submit
         </button>

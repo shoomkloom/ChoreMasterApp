@@ -3,7 +3,7 @@ export class Group {
     name: string;
     imageUrl: string;
     masterId: string;
-    slaveIds: [{typeslaveId: String}];
+    slaveIds: Array<string>;
     createdDate: Date;
     updatedDate: Date;
 }

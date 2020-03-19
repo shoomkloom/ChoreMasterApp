@@ -12,6 +12,7 @@ import { User } from 'src/app/models/user';
 })
 export class GroupCreateComponent implements OnInit {
   users: User[] = [];
+  selected: string[] = [];
   group = new Group();
   submitted = false;
   loading = false;
@@ -37,11 +38,16 @@ export class GroupCreateComponent implements OnInit {
   getUsers(){
     this.serverApi.usersGet()
       .subscribe(
-        (resUser: User[]) => {
-          resUser.forEach(value => {
-            this.users.push(value);
-            this.sortUsers();  
-          });
+        (resUsers: User[]) => {
+          this.users = resUsers;
+          
+          //Remove me from the list
+          const meUserId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+          const meIndex = this.users.findIndex(({ _id }) => _id === meUserId);
+          if(meIndex >= 0){
+            this.users.splice(meIndex, 1);
+          }
+          this.sortUsers();  
         },
         (error: AppError) => {
           console.log('ERROR:', error);
@@ -63,6 +69,7 @@ export class GroupCreateComponent implements OnInit {
     this.alertService.clear();
 
     this.group.masterId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+    this.group.slaveIds = this.selected;
 
     //Create the group
     this.serverApi.groupCreate(this.group)
@@ -74,10 +81,7 @@ export class GroupCreateComponent implements OnInit {
         },
         (error: AppError) => {
           console.log('ERROR:', error);
-          if(error.status === 400){
-            this.alertService.error('Invalid name or details!');
-          }
-          else if(error.status === 401){
+          if(error.status === 400 || error.status === 401){
             this.alertService.error('Unauthorised, please login again!');
           }
           else{
@@ -86,8 +90,6 @@ export class GroupCreateComponent implements OnInit {
           this.loading = false;
         }
       )
-
-      //Now need to add the other users
   }
 
   onCancel(){

@@ -20,6 +20,7 @@ import { ChoreTemplateCreatorPipe } from './pipes/chore-template-creator.pipe';
 import { GroupComponent } from './components/group/group.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { GroupCreateComponent } from './components/group-create/group-create.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { GroupCreateComponent } from './components/group-create/group-create.com
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgSelectModule
   ],
   providers: [
     ServerApiService,
