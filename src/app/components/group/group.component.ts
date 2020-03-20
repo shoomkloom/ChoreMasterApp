@@ -15,6 +15,7 @@ export class GroupComponent implements OnInit {
   @Input() color: String;
   @Output() assigned = new EventEmitter<User>();
   groupUsers: User[] = [];
+  editing = false;
   
   constructor(
     private serverApi: ServerApiService,
@@ -26,6 +27,7 @@ export class GroupComponent implements OnInit {
   }
 
   getGroupUsers(){
+    this.groupUsers = [];
     this.serverApi.groupGetUsers(this.group._id)
       .subscribe(
         (resGroupUsers: User[]) => {
@@ -48,5 +50,19 @@ export class GroupComponent implements OnInit {
   onAssign(groupUser: User){
     //Assign a chore to this user
     this.assigned.emit(groupUser);
+  }
+
+  onGroupEdit(){
+    this.editing = true;
+  }
+
+  onGroupEditCanceled(){
+    this.editing = false;
+  }
+
+  onGroupEdited(updatedGroup: Group){
+    this.group = updatedGroup;
+    this.getGroupUsers();
+    this.editing = false;
   }
 }

@@ -12,7 +12,7 @@ import { User } from 'src/app/models/user';
 })
 export class GroupCreateComponent implements OnInit {
   users: User[] = [];
-  selected: string[] = [];
+  selected: User[] = [];
   group = new Group();
   submitted = false;
   loading = false;
@@ -69,7 +69,11 @@ export class GroupCreateComponent implements OnInit {
     this.alertService.clear();
 
     this.group.masterId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
-    this.group.slaveIds = this.selected;
+
+    this.group.slaveIds = [];
+    this.selected.forEach(element => {
+      this.group.slaveIds.push(element._id);
+    });
 
     //Create the group
     this.serverApi.groupCreate(this.group)
@@ -95,5 +99,4 @@ export class GroupCreateComponent implements OnInit {
   onCancel(){
     this.canceled.emit();
   }
-
 }

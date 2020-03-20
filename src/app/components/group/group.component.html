@@ -1,35 +1,48 @@
 <div class="card" style="margin-top:10px;" [style.border-color]="color">
-    <div class="card-header">
-        <div>
-            <b>{{group.name}}</b>
-            &nbsp;<button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-pencil-alt"></i></button>
-            &nbsp;<button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-plus"></i></button>
+    <div *ngIf="editing; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+        <cm-group-edit
+            [group]=group
+            [color]=color
+            (edited)="onGroupEdited($event)" 
+            (canceled)="onGroupEditCanceled()">
+        </cm-group-edit>
+    </ng-template>
+    <ng-template #elseBlock>
+        <div class="card-header">
+            <div>
+                <b>{{group.name}}</b>&nbsp;
+                <button 
+                    (click)="onGroupEdit()"
+                    class="btn btn-sm btn-outline-secondary btn-sm-action">
+                        <i class="fas fa-pencil-alt"></i>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="list-group list-group-flush">
-            <div class="list-group-item"
-                *ngFor="let groupUser of groupUsers">
-                <div class="row no-gutters">
-                    <div class="col-10 card-text text-left">
-                        <button class="btn btn-sm btn-outline-secondary btn-sm-action"><i class="fas fa-minus"></i></button>
-                        &nbsp;{{groupUser.name}}
-                    </div>
-                    <div class="col-2 text-right">
-                        <button 
-                            type="button" 
-                            class="btn btn-sm btn-outline-secondary" 
-                            [style.border-color]="color" 
-                            (click)="onAssign(groupUser)">
-                            Assign
-                        </button>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item"
+                    *ngFor="let groupUser of groupUsers;">
+                    <div class="row no-gutters">
+                        <div class="col-10 card-text text-left">
+                            &nbsp;{{groupUser.name}}
+                        </div>
+                        <div class="col-2 text-right">
+                            <button 
+                                type="button" 
+                                class="btn btn-sm btn-outline-secondary" 
+                                [style.border-color]="color" 
+                                (click)="onAssign(groupUser)">
+                                Assign
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card-footer">
-        <div><small class="text-muted">Created on: {{group.createdDate | date:'longDate'}}</small></div>
-        <div><small class="text-muted" *ngIf="group.updatedDate">Last updated: {{group.updatedDate | date:'longDate'}}</small></div>
-    </div>
+        <div class="card-footer">
+            <div><small class="text-muted">Created on: {{group.createdDate | date:'longDate'}}</small></div>
+            <div><small class="text-muted" *ngIf="group.updatedDate">Last updated: {{group.updatedDate | date:'longDate'}}</small></div>
+        </div>
+    </ng-template>
 </div>

@@ -47,8 +47,8 @@ export class ChoreTemplatesComponent implements OnInit {
         (resChoreTemplates: ChoreTemplate[]) => {
           resChoreTemplates.forEach(value => {
             this.choreTemplates.push(value);
-            this.sortChoreTemplates();  
           });
+          this.sortChoreTemplates();
         },
         (error: AppError) => {
           console.log('ERROR:', error);

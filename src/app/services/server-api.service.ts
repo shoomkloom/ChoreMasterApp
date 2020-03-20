@@ -4,6 +4,7 @@ import { EMPTY, throwError, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppError } from '../app-error';
 import { User } from '../models/user';
+import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
@@ -116,13 +117,13 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  groupCreate(group){
+  groupCreate(group: Group){
     const url = this.url + '/api/groups';
     return this.httpClient.post(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
-  groupUpdate(group){
-    const url = this.url + '/api/groups';
+  groupUpdate(group: Group){
+    const url = this.url + '/api/groups/' + group._id;
     return this.httpClient.put(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 

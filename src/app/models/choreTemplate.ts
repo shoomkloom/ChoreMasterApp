@@ -3,7 +3,6 @@ export class ChoreTemplate {
     name: String;
     imageUrl: String;
     details: String;
-    state: String;
     creatorId: String;
     createdDate: Date;
     updatedDate: Date;

@@ -21,6 +21,7 @@ import { GroupComponent } from './components/group/group.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { GroupCreateComponent } from './components/group-create/group-create.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { GroupEditComponent } from './components/group-edit/group-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ChoreTemplateCreatorPipe,
     GroupComponent,
     GroupsComponent,
-    GroupCreateComponent
+    GroupCreateComponent,
+    GroupEditComponent
   ],
   imports: [
     BrowserModule,

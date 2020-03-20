@@ -1,10 +1,13 @@
 <!-- Form: Create New Chore Template -->
-<div class="container">
+<div class="container" style="margin:10px;">
     <h5>Create New Group:</h5>
     <form (ngSubmit)="onSubmit()" #createNewGroupForm="ngForm">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name"
+            <input type="text" 
+                class="form-control" 
+                [style.border-color]="color"
+                id="name"
                 required
                 [(ngModel)]="group.name" name="name"
                 #name="ngModel">
@@ -15,6 +18,7 @@
         </div>
         <div class="form-group">
             <label for="members">Select Members:</label>
+            <span [style.border-color]="color">
             <ng-select #MemberNgSelect
                 [items]="users"
                 required
@@ -26,8 +30,9 @@
                 [hideSelected]="true"
                 [closeOnSelect]="false"
                 [clearSearchOnAdd]="true"
-                [(ngModel)]="selected" name="memberSelect">
+                [(ngModel)]="selected" name="selected">
             </ng-select>
+            </span>
         </div>
         <button type="submit" class="btn btn-primary" 
             [disabled]="!createNewGroupForm.form.valid">Submit

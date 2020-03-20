@@ -47,8 +47,8 @@ export class GroupsComponent implements OnInit {
         (resGroups: Group[]) => {
           resGroups.forEach(value => {
             this.groups.push(value);
-            this.sortGroups();  
           });
+          this.sortGroups();
         },
         (error: AppError) => {
           console.log('ERROR:', error);
