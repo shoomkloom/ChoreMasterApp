@@ -22,6 +22,7 @@ export class ChoreTemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
     this.getMasterUser();
   }
 

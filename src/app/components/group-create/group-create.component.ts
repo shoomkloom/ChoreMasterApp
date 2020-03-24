@@ -26,6 +26,7 @@ export class GroupCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
     this.getUsers();
   }
 

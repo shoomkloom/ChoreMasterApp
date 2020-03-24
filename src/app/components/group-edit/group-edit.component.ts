@@ -27,6 +27,7 @@ export class GroupEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
     this.getUsers().then(() => {
       this.findGroupSlaves();
     });

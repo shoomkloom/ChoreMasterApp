@@ -23,6 +23,7 @@ export class GroupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
     this.getGroupUsers();
   }
 

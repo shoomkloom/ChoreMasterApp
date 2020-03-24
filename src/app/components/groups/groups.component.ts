@@ -27,7 +27,8 @@ export class GroupsComponent implements OnInit {
     private alertService: AlertService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.alertService.clear();
     this.getGroups();
   }
 

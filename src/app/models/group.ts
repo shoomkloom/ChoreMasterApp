@@ -1,9 +1,9 @@
 export class Group {
-    _id: string;
+    _id: number;
     name: string;
     imageUrl: string;
-    masterId: string;
-    slaveIds: Array<string>;
+    masterId: number;
+    slaveIds: Array<number>;
     createdDate: Date;
     updatedDate: Date;
 }

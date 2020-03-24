@@ -17,7 +17,7 @@ export class ChoreTemplatesComponent implements OnInit {
   creatingNew = false;
   assignChore = false;
   assignedChoreTemplate: ChoreTemplate = null;
-  filterCreatorId: String;
+  filterCreatorId: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,7 +27,8 @@ export class ChoreTemplatesComponent implements OnInit {
     private alertService: AlertService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.alertService.clear();
     this.getChoreTemplates();
   }
 

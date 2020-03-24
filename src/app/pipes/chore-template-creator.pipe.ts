@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ChoreTemplateCreatorPipe implements PipeTransform {
 
-  transform(items: any[], creatorId: String): any[] {
+  transform(items: any[], creatorId: number): any[] {
     if (!items) return [];
     if (!creatorId) return items;
   

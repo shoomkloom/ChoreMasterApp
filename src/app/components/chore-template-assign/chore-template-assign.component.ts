@@ -3,6 +3,8 @@ import { ChoreTemplate } from '../../models/choreTemplate';
 import { ServerApiService } from '../../services/server-api.service';
 import { AlertService } from '../../services/alert.service';
 import { AppError } from '../../app-error';
+import { User } from 'src/app/models/user';
+import { Chore } from 'src/app/models/chore';
 
 @Component({
   selector: 'cm-chore-template-assign',
@@ -13,8 +15,10 @@ export class ChoreTemplateAssignComponent implements OnInit {
   @Input() choreTemplate: ChoreTemplate;
   submitted = false;
   loading = false;
+  users: User[] = [];
+  selected: User;
 
-  @Output() assigned = new EventEmitter<ChoreTemplate>();
+  @Output() assigned = new EventEmitter<Chore>();
   @Output() canceled = new EventEmitter();
 
   constructor(
@@ -23,6 +27,33 @@ export class ChoreTemplateAssignComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
+    this.getUsers();
+  }
+
+  sortUsers(){
+    this.users.sort(function(a, b) {
+      return a.name>b.name?1:a.name<b.name?-1:0;
+    })
+  }
+
+  getUsers(){
+    this.serverApi.usersGet()
+      .subscribe(
+        (resUsers: User[]) => {
+          this.users = resUsers;
+          this.sortUsers();  
+        },
+        (error: AppError) => {
+          console.log('ERROR:', error);
+          if(error.status === 401){
+            this.alertService.error('Unauthorised, please login again!');
+          }
+          else{
+            this.alertService.error('There was an unexpected error, please try again.');
+          }
+        }
+      )
   }
 
   onSubmit() {
@@ -32,19 +63,19 @@ export class ChoreTemplateAssignComponent implements OnInit {
     // reset alerts on submit
     this.alertService.clear();
 
-    /*@@*/
-    this.alertService.success("-- Success --");
-    this.loading = false;
-    return;
-    /*@@*/
-    
-    this.serverApi.choreCreate(this.choreTemplate)
+    let chore = {
+      choreTemplateId: this.choreTemplate._id,
+      masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
+      slaveId: this.selected._id,
+    }
+        
+    this.serverApi.choreCreate(chore)
       .subscribe(
-        (validChoreTemplate: ChoreTemplate) => {
+        (validChore: Chore) => {
           this.submitted = false;
           this.loading = false;
-          this.assigned.emit(validChoreTemplate);
-          this.alertService.success("-- Success --");
+          this.assigned.emit(validChore);
+          this.alertService.success(`Chore '${this.choreTemplate.name}' was succesfully assigned to ${this.selected.name}`);
         },
         (error: AppError) => {
           console.log('ERROR:', error);

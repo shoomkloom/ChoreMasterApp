@@ -23,6 +23,7 @@ export class ChoreTemplateCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.alertService.clear();
   }
 
   onSubmit() {

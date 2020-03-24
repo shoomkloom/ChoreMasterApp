@@ -2,16 +2,16 @@
 <ng-template #thenBlock>
     <h2>Hi {{currentUser.name}}!</h2>
     <ul class="nav nav-tabs nav-pills justify-content-end" id="myTab" role="tablist">
-      <li class="nav-item">
+      <li class="nav-item" (click)="tabClicked('me-tab')">
         <a 
           class="nav-link active" id="me-tab" data-toggle="tab" href="#me" 
           role="tab" aria-controls="me" aria-selected="true">Me</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" (click)="tabClicked('my-groups-tab')">
         <a class="nav-link" id="my-groups-tab" data-toggle="tab" href="#my-groups" 
         role="tab" aria-controls="my-groups" aria-selected="false">My Groups</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" (click)="tabClicked('chore-templates-tab')">
         <a class="nav-link" id="chore-templates-tab" data-toggle="tab" href="#chore-templates" 
         role="tab" aria-controls="chore-templates" aria-selected="false">Chore Types</a>
       </li>

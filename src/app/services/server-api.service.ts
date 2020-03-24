@@ -96,7 +96,7 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  userGet(Id: String){
+  userGet(Id: number){
     const url = this.url + '/api/users/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -112,7 +112,7 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  groupGet(Id: String){
+  groupGet(Id: number){
     const url = this.url + '/api/groups/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
@@ -127,23 +127,23 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(group), this.getAuthHttpOptions());
   }
 
-  groupGetUsers(Id: String){
+  groupGetUsers(Id: number){
     const url = this.url + '/api/groups/' + Id + '/users';
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  groupAddUser(Id: String, userId: String){
+  groupAddUser(Id: number, userId: number){
     const url = this.url + '/api/groups/' + Id + '/addUser/' + userId;
     return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
-  groupRemoveUser(Id: String, userId: String){
+  groupRemoveUser(Id: number, userId: number){
     const url = this.url + '/api/groups/' + Id + '/removeUser/' + userId;
     return this.httpClient.put(url, this.getAuthHttpOptions());
   }
 
-  groupDelete(Id: String){
-    const url = this.url + '/api/groups';
+  groupDelete(Id: number){
+    const url = this.url + '/api/groups/' + Id;
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 
@@ -153,8 +153,8 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  choreTemplateGet(Id: String){
-    const url = this.url + '/api/chore-templates' + Id;
+  choreTemplateGet(Id: number){
+    const url = this.url + '/api/chore-templates/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
@@ -169,8 +169,8 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(choreTemplate), this.getAuthHttpOptions());
   }
 
-  choreTemplateDelete(Id: String){
-    const url = this.url + '/api/chore-templates';
+  choreTemplateDelete(Id: number){
+    const url = this.url + '/api/chore-templates/' + Id;
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 
@@ -180,8 +180,8 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
-  choreGet(Id: String){
-    const url = this.url + '/api/chores' + Id;
+  choreGet(Id: number){
+    const url = this.url + '/api/chores/' + Id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
@@ -195,8 +195,8 @@ export class ServerApiService {
     return this.httpClient.put(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
-  choreDelete(Id: String){
-    const url = this.url + '/api/chore';
+  choreDelete(Id: number){
+    const url = this.url + '/api/chore/' + Id;
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 }

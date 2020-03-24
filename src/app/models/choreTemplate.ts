@@ -1,9 +1,9 @@
 export class ChoreTemplate {
     _id: number;
-    name: String;
-    imageUrl: String;
-    details: String;
-    creatorId: String;
+    name: string;
+    imageUrl: string;
+    details: string;
+    creatorId: number;
     createdDate: Date;
     updatedDate: Date;
 }
