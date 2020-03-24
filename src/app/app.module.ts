@@ -22,6 +22,7 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { GroupCreateComponent } from './components/group-create/group-create.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GroupEditComponent } from './components/group-edit/group-edit.component';
+import { GroupAssignComponent } from './components/group-assign/group-assign.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { GroupEditComponent } from './components/group-edit/group-edit.component
     GroupComponent,
     GroupsComponent,
     GroupCreateComponent,
-    GroupEditComponent
+    GroupEditComponent,
+    GroupAssignComponent
   ],
   imports: [
     BrowserModule,

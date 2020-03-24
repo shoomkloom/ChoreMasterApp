@@ -1,22 +1,22 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ChoreTemplate } from '../../models/choreTemplate';
-import { ServerApiService } from '../../services/server-api.service';
-import { AlertService } from '../../services/alert.service';
-import { AppError } from '../../app-error';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Chore } from 'src/app/models/chore';
+import { ServerApiService } from 'src/app/services/server-api.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { AppError } from 'src/app/app-error';
+import { ChoreTemplate } from 'src/app/models/choreTemplate';
 
 @Component({
-  selector: 'cm-chore-template-assign',
-  templateUrl: './chore-template-assign.component.html',
-  styleUrls: ['./chore-template-assign.component.css']
+  selector: 'cm-group-assign',
+  templateUrl: './group-assign.component.html',
+  styleUrls: ['./group-assign.component.css']
 })
-export class ChoreTemplateAssignComponent implements OnInit {
-  @Input() choreTemplate: ChoreTemplate;
+export class GroupAssignComponent implements OnInit {
+  @Input() user: User;
   submitted = false;
   loading = false;
-  users: User[] = [];
-  selected: User;
+  choreTemplates: ChoreTemplate[] = [];
+  selected: ChoreTemplate;
 
   @Output() assigned = new EventEmitter<Chore>();
   @Output() canceled = new EventEmitter();
@@ -28,21 +28,21 @@ export class ChoreTemplateAssignComponent implements OnInit {
 
   ngOnInit(): void {
     this.alertService.clear();
-    this.getUsers();
+    this.getChoreTemplates();
   }
 
-  sortUsers(){
-    this.users.sort(function(a, b) {
+  sortCoreTemplates(){
+    this.choreTemplates.sort(function(a, b) {
       return a.name>b.name?1:a.name<b.name?-1:0;
     })
   }
 
-  getUsers(){
-    this.serverApi.usersGet()
+  getChoreTemplates(){
+    this.serverApi.choreTemplatesGet()
       .subscribe(
-        (resUsers: User[]) => {
-          this.users = resUsers;
-          this.sortUsers();  
+        (reschoreTemplates: ChoreTemplate[]) => {
+          this.choreTemplates = reschoreTemplates;
+          this.sortCoreTemplates();  
         },
         (error: AppError) => {
           console.log('ERROR:', error);
@@ -64,9 +64,9 @@ export class ChoreTemplateAssignComponent implements OnInit {
     this.alertService.clear();
 
     let chore = {
-      choreTemplateId: this.choreTemplate._id,
+      choreTemplateId: this.selected._id,
       masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
-      slaveId: this.selected._id,
+      slaveId: this.user._id,
     }
         
     this.serverApi.choreCreate(chore)
@@ -75,7 +75,7 @@ export class ChoreTemplateAssignComponent implements OnInit {
           this.submitted = false;
           this.loading = false;
           this.assigned.emit(validChore);
-          this.alertService.success(`Chore '${this.choreTemplate.name}' was assigned to ${this.selected.name}`);
+          this.alertService.success(`Chore '${this.selected.name}' was assigned to ${this.user.name}`);
         },
         (error: AppError) => {
           console.log('ERROR:', error);
@@ -96,5 +96,4 @@ export class ChoreTemplateAssignComponent implements OnInit {
   onCancel(){
     this.canceled.emit();
   }
-
 }

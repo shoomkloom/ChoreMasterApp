@@ -13,9 +13,10 @@ import { AppError } from 'src/app/app-error';
 export class GroupComponent implements OnInit {
   @Input() group: Group;
   @Input() color: String;
-  @Output() assigned = new EventEmitter<User>();
   groupUsers: User[] = [];
   editing = false;
+  assigning = false;
+  assginedGroupUser: User = null;
   
   constructor(
     private serverApi: ServerApiService,
@@ -49,8 +50,18 @@ export class GroupComponent implements OnInit {
   }
 
   onAssign(groupUser: User){
-    //Assign a chore to this user
-    this.assigned.emit(groupUser);
+    this.assginedGroupUser = groupUser;
+    this.assigning = true;
+  }
+
+  onAssignCanceled(){
+    this.assginedGroupUser = null;
+    this.assigning = false;
+  }
+
+  onAssignCompleted(){
+    this.assginedGroupUser = null;
+    this.assigning = false;
   }
 
   onGroupEdit(){
