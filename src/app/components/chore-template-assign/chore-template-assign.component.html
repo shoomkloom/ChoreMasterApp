@@ -37,7 +37,7 @@
                 [items]="users"
                 required
                 bindLabel="name"
-                placeholder="Type to search"
+                placeholder="Type name to search"
                 [multiple]="false"
                 [searchable]="true" 
                 [clearable]="true"
@@ -46,6 +46,24 @@
                 [clearSearchOnAdd]="true"
                 [(ngModel)]="selected" name="memberSelect">
             </ng-select>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" 
+                placeholder="yyyy-mm-dd"
+                name="dp" 
+                [displayMonths]="2"
+                [(ngModel)]="choreDate" 
+                ngbDatepicker 
+                #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" 
+                    (click)="d.toggle()" 
+                    type="button">
+                    <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary" 
             [disabled]="!assignChoreTemplateForm.form.valid">Assign

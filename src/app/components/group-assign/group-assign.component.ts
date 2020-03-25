@@ -5,6 +5,7 @@ import { ServerApiService } from 'src/app/services/server-api.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AppError } from 'src/app/app-error';
 import { ChoreTemplate } from 'src/app/models/choreTemplate';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'cm-group-assign',
@@ -13,10 +14,12 @@ import { ChoreTemplate } from 'src/app/models/choreTemplate';
 })
 export class GroupAssignComponent implements OnInit {
   @Input() user: User;
+  @Input() color: String;
   submitted = false;
   loading = false;
   choreTemplates: ChoreTemplate[] = [];
   selected: ChoreTemplate;
+  choreDate: NgbDateStruct;
 
   @Output() assigned = new EventEmitter<Chore>();
   @Output() canceled = new EventEmitter();
@@ -63,10 +66,14 @@ export class GroupAssignComponent implements OnInit {
     // reset alerts on submit
     this.alertService.clear();
 
+    let choreDateDate = new Date(this.choreDate.year, this.choreDate.month-1, this.choreDate.day);
+
     let chore = {
       choreTemplateId: this.selected._id,
       masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
       slaveId: this.user._id,
+      state: 'Pending',
+      date: choreDateDate
     }
         
     this.serverApi.choreCreate(chore)

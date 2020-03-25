@@ -1,20 +1,13 @@
 export class Chore {
     _id: number;
-    choreTemplateId: number;
+    choreTemplateId: number; //Required
     name: string;
     imageUrl: string;
     details: string;
-    masterId: number;
-    slaveId: number;
-    scheduledDates: { 
-        nextDate: Date;
-        pastDates: Array<Date>;
-        everyDay: Boolean;
-        everyWeek: Boolean;
-        everyMonth: Boolean;
-        everyYear: Boolean;
-        repititions: Number;
-    }
+    masterId: number; //Required
+    slaveId: number; //Required
+    state: string; //Required: Pending, Done, Reject
+    date: Date; //Required
     comment: string;
     createdDate: Date;
     updatedDate: Date;

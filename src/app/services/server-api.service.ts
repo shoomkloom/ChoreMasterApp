@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { AppError } from '../app-error';
 import { User } from '../models/user';
 import { Group } from '../models/group';
+import { Chore } from '../models/chore';
 
 @Injectable({
   providedIn: 'root'
@@ -190,13 +191,13 @@ export class ServerApiService {
     return this.httpClient.post(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
-  choreUpdate(chore){
-    const url = this.url + '/api/chore';
+  choreUpdate(Id: number, chore){
+    const url = this.url + '/api/chores/' + Id;
     return this.httpClient.put(url, JSON.stringify(chore), this.getAuthHttpOptions());
   }
 
   choreDelete(Id: number){
-    const url = this.url + '/api/chore/' + Id;
+    const url = this.url + '/api/chores/' + Id;
     return this.httpClient.delete(url, this.getAuthHttpOptions());
   }
 }

@@ -5,6 +5,7 @@ import { AlertService } from '../../services/alert.service';
 import { AppError } from '../../app-error';
 import { User } from 'src/app/models/user';
 import { Chore } from 'src/app/models/chore';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'cm-chore-template-assign',
@@ -17,6 +18,7 @@ export class ChoreTemplateAssignComponent implements OnInit {
   loading = false;
   users: User[] = [];
   selected: User;
+  choreDate: NgbDateStruct;
 
   @Output() assigned = new EventEmitter<Chore>();
   @Output() canceled = new EventEmitter();
@@ -63,10 +65,14 @@ export class ChoreTemplateAssignComponent implements OnInit {
     // reset alerts on submit
     this.alertService.clear();
 
+    let choreDateDate = new Date(this.choreDate.year, this.choreDate.month-1, this.choreDate.day);
+
     let chore = {
       choreTemplateId: this.choreTemplate._id,
       masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
       slaveId: this.selected._id,
+      state: 'Pending',
+      date: choreDateDate
     }
         
     this.serverApi.choreCreate(chore)
