@@ -6,6 +6,7 @@ import { AppError } from '../../app-error';
 import { User } from 'src/app/models/user';
 import { Chore } from 'src/app/models/chore';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Helpers } from '../helpers';
 
 @Component({
   selector: 'cm-chore-template-assign',
@@ -25,7 +26,8 @@ export class ChoreTemplateAssignComponent implements OnInit {
 
   constructor(
     private serverApi: ServerApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private helpers: Helpers
   ) { }
 
   ngOnInit(): void {
@@ -69,7 +71,7 @@ export class ChoreTemplateAssignComponent implements OnInit {
 
     let chore = {
       choreTemplateId: this.choreTemplate._id,
-      masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
+      masterId: this.helpers.getCurrentUser()._id,
       slaveId: this.selected._id,
       state: 'Pending',
       date: choreDateDate

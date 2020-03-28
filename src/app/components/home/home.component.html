@@ -18,7 +18,7 @@
     </ul>
     <div class="tab-content tab-content-panel" id="myTabContent">
       <div class="tab-pane fade show active" id="me" role="tabpanel" aria-labelledby="me-tab">
-        First Content  
+        <cm-chore-list></cm-chore-list>
       </div>
       <div class="tab-pane fade" id="my-groups" role="tabpanel" aria-labelledby="my-groups-tab">
         <cm-groups></cm-groups> 
@@ -27,61 +27,8 @@
         <cm-chore-templates></cm-chore-templates>
       </div>
     </div>
-
-    <!--
-    <ul ngbNav #nav="ngbNav" class="nav-tabs">
-      <li ngbNavItem>
-        <a ngbNavLink>Me</a>
-        <ng-template ngbNavContent>
-          First content
-        </ng-template>
-      </li>
-      <li ngbNavItem>
-        <a ngbNavLink>My Groups</a>
-        <ng-template ngbNavContent>
-          Second content
-        </ng-template>
-      </li>
-      <li ngbNavItem>
-        <a ngbNavLink>Chore Templates</a>
-        <ng-template ngbNavContent>
-          <cm-chore-templates></cm-chore-templates>
-        </ng-template>
-      </li>
-    </ul>
-    <div [ngbNavOutlet]="nav"></div>
-    -->
-    <!--
-    <ngb-tabset justify="end">
-      <ngb-tab title="Me">
-        <ng-template ngbTabContent>
-          <p>Tab one content here</p>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab title="My Groups">
-        <ng-template ngbTabContent>
-          <p>Tab two content here</p>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Chore Templates">
-        <ng-template ngbTabContent>
-          <cm-chore-templates></cm-chore-templates>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
-  -->
 </ng-template>
 <ng-template #elseBlock>
     <h1>Hi!</h1>
     <p>Please login to start</p>    
 </ng-template>
-
-<!--
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.email}} ({{user.name}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
--->

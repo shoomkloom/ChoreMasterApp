@@ -6,6 +6,7 @@ import { AppError } from '../app-error';
 import { User } from '../models/user';
 import { Group } from '../models/group';
 import { Chore } from '../models/chore';
+import { Helpers } from '../components/helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -15,30 +16,33 @@ export class ServerApiService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private httpClient: HttpClient) { 
-    if(localStorage.getItem('currentUser') == null){
+  constructor(
+    private httpClient: HttpClient,
+    private helpers: Helpers) { 
+    
+      if(this.helpers.getCurrentUser() == null){
       this.clearUser();
     }
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(this.helpers.getCurrentUser());
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public logout(){
     this.clearUser();
-    this.currentUserSubject.next(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject.next(this.helpers.getCurrentUser());
   }
 
   clearUser(){
-    localStorage.setItem('currentUser', JSON.stringify({id: -1}));
-    localStorage.setItem('token', '-1');
+    this.helpers.clearCurrentUser();
+    this.helpers.clearToken();
   }
 
   getAuthHttpOptions(){
-    //*@@*/console.log('token:', localStorage.getItem('token'));
+    //*@@*/console.log('token:', this.helpers.getToken());
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'x-auth-token': localStorage.getItem('token')
+        'x-auth-token': this.helpers.getToken()
       })
     };
 
@@ -57,9 +61,9 @@ export class ServerApiService {
       .pipe(
         map((res: HttpResponse<Object>) => {
           //Store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(res.body));
+          this.helpers.setCurrentUser(JSON.stringify(res.body));
           this.currentUserSubject.next(res.body as User);
-          localStorage.setItem('token', res.headers.get('x-auth-token'));
+          this.helpers.setToken(res.headers.get('x-auth-token'));
           return res.body as User;
         }),
         catchError( err => {
@@ -161,7 +165,7 @@ export class ServerApiService {
 
   choreTemplateCreate(choreTemplate){
     const url = this.url + '/api/chore-templates';
-    choreTemplate.creatorId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+    choreTemplate.creatorId = this.helpers.getCurrentUser()._id;
     return this.httpClient.post(url, JSON.stringify(choreTemplate), this.getAuthHttpOptions());
   }
 
@@ -178,6 +182,11 @@ export class ServerApiService {
   //Chores
   choresGet(){
     const url = this.url + '/api/chores';
+    return this.httpClient.get(url, this.getAuthHttpOptions());
+  }
+
+  choresGetMe(){
+    const url = this.url + '/api/chores/me/' + this.helpers.getCurrentUser()._id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 

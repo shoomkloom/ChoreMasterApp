@@ -4,6 +4,7 @@ import { Group } from 'src/app/models/group';
 import { ServerApiService } from 'src/app/services/server-api.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AppError } from 'src/app/app-error';
+import { Helpers } from '../helpers';
 
 @Component({
   selector: 'cm-group-edit',
@@ -23,7 +24,8 @@ export class GroupEditComponent implements OnInit {
 
   constructor(
     private serverApi: ServerApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private helpers: Helpers
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class GroupEditComponent implements OnInit {
             this.users = resUsers;
             
             //Remove me from the list
-            const meUserId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+            const meUserId = this.helpers.getCurrentUser()._id;
             const meIndex = this.users.findIndex(({ _id }) => _id === meUserId);
             if(meIndex >= 0){
               this.users.splice(meIndex, 1);
@@ -92,7 +94,7 @@ export class GroupEditComponent implements OnInit {
     // reset alerts on submit
     this.alertService.clear();
 
-    this.group.masterId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+    this.group.masterId = this.helpers.getCurrentUser()._id;
     
     this.group.slaveIds = [];
     this.selected.forEach(element => {

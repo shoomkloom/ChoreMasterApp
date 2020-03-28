@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppError } from '../../app-error';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
+import { Helpers } from '../helpers';
 
 @Component({
   selector: 'cm-chore-templates',
@@ -24,7 +25,8 @@ export class ChoreTemplatesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private serverApi: ServerApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private helpers: Helpers
   ) { }
 
   ngOnInit(): void {
@@ -87,7 +89,7 @@ export class ChoreTemplatesComponent implements OnInit {
   }
 
   onFilterMine(){
-    this.filterCreatorId = (JSON.parse(localStorage.getItem('currentUser')) as User)._id;
+    this.filterCreatorId = this.helpers.getCurrentUser()._id;
   }
 
   onFilterAll(){

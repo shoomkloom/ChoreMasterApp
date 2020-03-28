@@ -5,7 +5,7 @@
         <cm-group-assign
             [user]=assginedGroupUser
             [color]=color
-            (assigned)="onAssignCompleted($event)" 
+            (assigned)="onAssignCompleted()" 
             (canceled)="onAssignCanceled()">
         </cm-group-assign>
     </div>
@@ -54,8 +54,8 @@
             </div>
         </div>
         <div class="card-footer">
-            <div><small class="text-muted">Created on: {{group.createdDate | date:'longDate'}}</small></div>
-            <div><small class="text-muted" *ngIf="group.updatedDate">Last updated: {{group.updatedDate | date:'longDate'}}</small></div>
+            <div><small class="text-muted">Created on: {{group.createdDate | date:'shortDate'}}</small></div>
+            <div><small class="text-muted" *ngIf="group.updatedDate">Last updated: {{group.updatedDate | date:'shortDate'}}</small></div>
         </div>
     </div>
 </div>

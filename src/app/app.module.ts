@@ -23,6 +23,14 @@ import { GroupCreateComponent } from './components/group-create/group-create.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GroupEditComponent } from './components/group-edit/group-edit.component';
 import { GroupAssignComponent } from './components/group-assign/group-assign.component';
+import { ChoreItemComponent } from './components/chore-item/chore-item.component';
+import { ChoreListComponent } from './components/chore-list/chore-list.component';
+
+//locales
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeHe from '@angular/common/locales/he';
+registerLocaleData(localeHe, 'he');
 
 @NgModule({
   declarations: [
@@ -40,7 +48,9 @@ import { GroupAssignComponent } from './components/group-assign/group-assign.com
     GroupsComponent,
     GroupCreateComponent,
     GroupEditComponent,
-    GroupAssignComponent
+    GroupAssignComponent,
+    ChoreItemComponent,
+    ChoreListComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +63,8 @@ import { GroupAssignComponent } from './components/group-assign/group-assign.com
   ],
   providers: [
     ServerApiService,
-    AlertService
+    AlertService,
+    { provide: LOCALE_ID, useValue: "he" },
   ],
   bootstrap: [AppComponent]
 })

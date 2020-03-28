@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServerApiService } from '../../services/server-api.service';
 import { AlertService } from '../../services/alert.service';
 import { AppError } from '../../app-error';
+import { Helpers } from '../helpers';
 
 @Component({
   selector: 'cm-register',
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private serverApi: ServerApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private helpers: Helpers
   ) { }
 
   ngOnInit(): void {
@@ -51,9 +53,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.alertService.success('Registration successful', true);
-
-          localStorage.setItem('user', JSON.stringify(data));
-
+          this.helpers.setCurrentUser(JSON.stringify(data));
           this.router.navigate(['/login']);
         },
         (error: AppError) => {

@@ -7,9 +7,9 @@
         <div>
             <div class="list-group-item-text"><span *ngIf="choreTemplate.details">{{choreTemplate.details}}</span></div>
             <span class="list-group-item-text"><small class="text-muted" *ngIf="masterUser">Created by: {{masterUser.name}}</small></span>
-            <span class="list-group-item-text"><small class="text-muted">on: {{choreTemplate.createdDate | date:'longDate'}}</small></span>
+            <span class="list-group-item-text"><small class="text-muted">on: {{choreTemplate.createdDate | date:'shortDate'}}</small></span>
         </div>
-        <small *ngIf="choreTemplate.updatedDate" class="list-group-item-text text-muted"> Last updated on: {{choreTemplate.updatedDate | date:'longDate'}}</small>
+        <small *ngIf="choreTemplate.updatedDate" class="list-group-item-text text-muted"> Last updated on: {{choreTemplate.updatedDate | date:'shortDate'}}</small>
     </div>
     </div>
         <div class="col-2 pull-right">

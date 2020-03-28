@@ -30,7 +30,7 @@
             <div class="col-sm-6" *ngFor="let group of groups; let i=index;">
                 <cm-group 
                     [group]="group" 
-                    [color]="getColor(i)" 
+                    [color]="helpers.getColor(i)" 
                     (assigned)="onChoreAssignClicked($event)">
                 </cm-group>
             </div>

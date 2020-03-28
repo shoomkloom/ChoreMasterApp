@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AppError } from 'src/app/app-error';
 import { ChoreTemplate } from 'src/app/models/choreTemplate';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Helpers } from '../helpers';
 
 @Component({
   selector: 'cm-group-assign',
@@ -26,7 +27,8 @@ export class GroupAssignComponent implements OnInit {
 
   constructor(
     private serverApi: ServerApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private helpers: Helpers
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class GroupAssignComponent implements OnInit {
 
     let chore = {
       choreTemplateId: this.selected._id,
-      masterId: (JSON.parse(localStorage.getItem('currentUser')) as User)._id,
+      masterId: this.helpers.getCurrentUser()._id,
       slaveId: this.user._id,
       state: 'Pending',
       date: choreDateDate
