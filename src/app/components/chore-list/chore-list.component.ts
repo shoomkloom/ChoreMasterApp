@@ -15,7 +15,7 @@ export class ChoreListComponent implements OnInit {
   pendingChores: Chore[] = [];
   activeIds = 'toggle-my-chores';
   activeIdList: String[] = [];
-  
+
   constructor(
     private serverApi: ServerApiService,
     private alertService: AlertService,
@@ -72,7 +72,7 @@ export class ChoreListComponent implements OnInit {
   }
 
   getChores(){
-    this.serverApi.choresGetMe()
+    this.serverApi.choresGetMine()
       .subscribe(
         (resChores: Chore[]) => {
           this.pendingChores = [];

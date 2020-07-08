@@ -185,6 +185,13 @@ export class ServerApiService {
     return this.httpClient.get(url, this.getAuthHttpOptions());
   }
 
+  //Get all chores where I am slave
+  choresGetMine(){
+    const url = this.url + '/api/chores/mine/' + this.helpers.getCurrentUser()._id;
+    return this.httpClient.get(url, this.getAuthHttpOptions());
+  }
+
+  //Get all chores where I am master or slave
   choresGetMe(){
     const url = this.url + '/api/chores/me/' + this.helpers.getCurrentUser()._id;
     return this.httpClient.get(url, this.getAuthHttpOptions());
