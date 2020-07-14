@@ -29,7 +29,7 @@ import { ChoreListComponent } from './components/chore-list/chore-list.component
 //locales
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import localeHe from '@angular/common/locales/global/he';
+import localeHe from '@angular/common/locales/he';
 registerLocaleData(localeHe, 'he');
 
 @NgModule({
