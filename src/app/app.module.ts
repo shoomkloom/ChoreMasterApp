@@ -30,6 +30,9 @@ import { ChoreListComponent } from './components/chore-list/chore-list.component
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeHe from '@angular/common/locales/he';
+import { ChoreHistoryListComponent } from './components/chore-history-list/chore-history-list.component';
+import { ChoreHistoryItemComponent } from './components/chore-history-item/chore-history-item.component';
+import { ChoreListFilterPipe } from './pipes/chore-list-filter.pipe';
 registerLocaleData(localeHe, 'he');
 
 @NgModule({
@@ -50,7 +53,10 @@ registerLocaleData(localeHe, 'he');
     GroupEditComponent,
     GroupAssignComponent,
     ChoreItemComponent,
-    ChoreListComponent
+    ChoreListComponent,
+    ChoreHistoryListComponent,
+    ChoreHistoryItemComponent,
+    ChoreListFilterPipe
   ],
   imports: [
     BrowserModule,
